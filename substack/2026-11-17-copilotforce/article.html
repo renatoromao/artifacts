@@ -1,0 +1,59 @@
+<p>Today at Microsoft Ignite, Salesforce and Microsoft announced <strong>Copilotforce</strong>, a partnership that brings Salesforce customer context and sales workflows into Microsoft Copilot, real-time CRM collaboration into Microsoft Teams, and bidirectional Zero Copy data access between Salesforce Data 360 and Microsoft Fabric.</p>
+<p>I build Copilot agents for customers every week, and a big share of them run their CRM on Salesforce and their daily work on Microsoft 365. Until today, bringing those two worlds into one agent meant connectors, custom actions, MCP servers and a lot of governance conversations. My take: the headline is not "Salesforce shows up in Copilot". The headline is that the CRM context now meets <strong>Work IQ</strong>, and that changes how I will design sales agents.</p>
+<h2>1. What really changes: three pieces, three different maturity levels</h2>
+<p>Copilotforce is not one product. It is three integrations, each with its own status on the official availability roadmap:</p>
+<ul>
+<li><strong>Salesforce in Microsoft Copilot</strong> (Public Preview, Beta): sales and revenue teams ask natural-language questions, get grounded, actionable outputs, and take Salesforce actions directly within Copilot. It is available in Salesforce AgentExchange and in the Microsoft Copilot plugin directory.</li>
+<li><strong>Sales Cloud in Teams</strong> (Pilot): introduced at Dreamforce, it brings pipeline and quota progress, active deal notifications and AI-driven briefing materials into Microsoft Teams, with Agentforce Coworker to take action.</li>
+<li><strong>Salesforce Data 360 + Microsoft Fabric</strong>: <strong>Data Federation</strong> is Generally Available, and <strong>Salesforce Data 360 Data Sharing</strong> into Microsoft OneLake is in Public Preview (Beta).</li>
+</ul>
+<p>When a customer asks me "can we use this tomorrow?", the honest answer depends on which piece they mean. The data layer is the most mature part. The Copilot experience is a beta. The Teams app is still a pilot.</p>
+<h2>2. The underrated detail: Work IQ is doing the heavy lifting</h2>
+<p>According to the announcement, Work IQ, the intelligence layer that powers Copilot, synthesizes Salesforce insights with relationships and content from Teams meetings, Outlook emails and shared documents across SharePoint and OneDrive.</p>
+<p>That is the part I care about most. A Salesforce opportunity on its own tells me the stage, the amount and the close date. What it does not tell me is what the customer said in last Tuesday's call or which document the procurement team is reviewing. The three workflows Salesforce highlighted only work because of that combination:</p>
+<ul>
+<li><strong>Customer Meeting Preparation</strong>: account history plus meeting transcripts in a single executive brief.</li>
+<li><strong>Deal-Health Analysis</strong>: surfacing hidden deal risks and customer sentiment before deals stall.</li>
+<li><strong>Pipeline Review &amp; Action Plans</strong>: turning pipeline data into ready-to-execute close plans directly inside Word and PowerPoint.</li>
+</ul>
+<p>Every one of those is something I have built by hand for customers, with a custom connector on one side and Microsoft Graph on the other. Having it as a governed plugin changes the build-versus-buy conversation.</p>
+<h2>3. Governance: the writeback rule is the one to remember</h2>
+<p>Salesforce in Microsoft Copilot operates through authenticated user access, preserving the permissions, sharing rules and audit trails established in both environments. Salesforce controls data access and governs supported business actions, while Microsoft keeps communications and documents under the existing enterprise compliance policies.</p>
+<p>The rule I will repeat in every workshop: <strong>supported writeback actions to the CRM require explicit user confirmation and respect existing validation rules</strong>. That is the right design. An agent that updates an opportunity silently is a trust problem; an agent that proposes the change and asks the seller to confirm is a productivity tool.</p>
+<p>The flip side is that the quality of the answers depends on the quality of your Salesforce data and permissions. If your sharing rules are messy, Copilot will faithfully reflect that mess.</p>
+<h2>4. The Fabric side: Zero Copy in both directions</h2>
+<p>For data teams, this is the most practical part today. Salesforce and Microsoft are delivering bidirectional Zero Copy integration between Salesforce Data 360 and Microsoft Fabric:</p>
+<ul>
+<li><strong>Data Federation</strong> (Generally Available): query and analyze supported Microsoft Fabric OneLake data directly within Salesforce Data 360, leaving the source data in Fabric.</li>
+<li><strong>Salesforce Data 360 Data Sharing</strong> (Public Preview, Beta): share curated Data 360 customer context into Microsoft OneLake.</li>
+</ul>
+<p>On the Fabric side, the <strong>Salesforce Data 360 integration with OneLake (Preview)</strong> uses OneLake Shortcuts. In the destination lakehouse you select <em>Get data &gt; New table shortcut &gt; Salesforce Data 360</em>, point it to the shared Data Lake Objects, and query them with SQL or Spark alongside your enterprise tables.</p>
+<p>Two prerequisites from the Microsoft documentation that I would check first: you need Salesforce Data 360 access with the <strong>Data Cloud Architect</strong> permission set and an edition that supports data sharing, and during preview only Data Lake Objects are supported (Data Model Objects, Calculated Insight Objects and schema-level shortcuts are not).</p>
+<h2>5. What admins and makers should do now</h2>
+<p>For Microsoft 365 and Copilot admins:</p>
+<ul>
+<li>Find <strong>Salesforce in Microsoft Copilot</strong> in the Microsoft Copilot plugin directory and decide who joins the beta. Being in the directory is not the same as being enabled for everyone.</li>
+<li>Review Salesforce sharing rules and field-level access with your CRM admin before the pilot. Copilot respects them, so they need to be right.</li>
+<li>Agree on a pilot group of sellers with real meetings and real pipeline, so Work IQ has context to combine.</li>
+</ul>
+<p>For makers and developers building in Copilot Studio:</p>
+<ul>
+<li>Map the custom Salesforce actions you built for meeting prep and deal summaries against the plugin. Some of them will become redundant.</li>
+<li>Keep your custom agents for what is specific to your business process; let the plugin handle the generic sales workflows.</li>
+<li>For analytics agents, try a OneLake shortcut to Data 360 and a Fabric data agent on top of it, instead of another ingestion pipeline.</li>
+</ul>
+<h2>What I'm watching</h2>
+<ul>
+<li>How the plugin behaves inside Copilot Studio agents, not only in Copilot chat.</li>
+<li>When Sales Cloud in Teams moves from pilot to a broader release.</li>
+<li>Licensing and packaging: the announcement says pricing and packaging are subject to change, so I would not commit budgets until they are commercially available.</li>
+<li>Accenture's results as Customer Zero, deploying the integrations in its own global sales organization.</li>
+</ul>
+<p>If you build Copilot and AI agents on Microsoft, subscribe so you get my hands-on notes as these features roll out.</p>
+<h2>Links</h2>
+<ul>
+<li><a href="https://www.salesforce.com/news/stories/copilotforce-announcement/">Salesforce and Microsoft Announce Copilotforce (official announcement)</a></li>
+<li><a href="https://community.fabric.microsoft.com/blog/fbc_fabricupdatesblogs/salesforce-data-360-integration-with-onelake-preview/5384626">Salesforce Data 360 integration with OneLake (Preview) – Microsoft Fabric Updates Blog</a></li>
+<li><a href="https://azure.microsoft.com/en-us/blog/introducing-the-new-microsoft-iq-putting-your-organizations-intelligence-to-work-in-every-agent/">Introducing the new Microsoft IQ – Microsoft Azure Blog</a></li>
+<li><a href="https://techcommunity.microsoft.com/blog/microsoft_365blog/whats-new-in-work-iq-at-ignite-2026-agents-that-get-work-done/4572219">What's new in Work IQ at Ignite 2026 – Microsoft Tech Community</a></li>
+</ul>
