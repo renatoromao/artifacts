@@ -1,0 +1,15 @@
+O Copilot Cowork agora decide o quanto precisa pensar em cada etapa.
+
+No Microsoft Ignite 2026, a Microsoft anunciou que o Auto no Copilot Cowork ajusta automaticamente o reasoning effort de cada tarefa. Consultas rápidas continuam rápidas. Trabalho complexo ganha raciocínio mais profundo.
+
+Por trás disso está o Microsoft-Decision-1.1, o modelo de decisão mais recente da Microsoft. Em cada etapa, ele escolhe o modelo certo para o trabalho.
+
+O detalhe que eu gostei: você não perde o controle. Se quiser, ainda pode definir o nível de esforço manualmente.
+
+Quem constrói agentes conhece bem a troca entre velocidade, custo e qualidade. Ter a plataforma decidindo a cada etapa, com a opção de ajustar na mão, é um bom padrão para quem está levando o Cowork para a empresa.
+
+O ponto de atenção: por enquanto está disponível no Frontier, o programa de acesso antecipado da Microsoft.
+
+E você, deixaria o Auto escolher o esforço ou prefere definir sozinho?
+
+Link com a minha análise completa na bio.
