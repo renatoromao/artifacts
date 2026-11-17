@@ -1,0 +1,17 @@
+A Microsoft acabou de criar uma camada nova para os agentes de IA: o Microsoft IQ.
+
+Foi anunciado hoje no Microsoft Ignite 2026. Entre o Copilot e o Agent 365, agora existe uma camada só, que reúne o contexto da sua empresa para todos os agentes.
+
+São cinco fontes de contexto: Work IQ (como as pessoas trabalham), Fabric IQ (dados operacionais), Foundry IQ (documentos e conhecimento curado), Web IQ (informação da web) e mais de 350 conectores de terceiros.
+
+O detalhe que mais me chamou atenção foram os business plugins. São pacotes governados de contexto, skills e fontes oficiais que vários agentes herdam. Você cria uma vez no Copilot, no GitHub Copilot ou no Foundry e reutiliza em todo lugar. Em quase todo projeto que entrego, a mesma regra de negócio é copiada agente por agente. Isso muda o jogo.
+
+E tem o ciclo de melhoria contínua: o Agent Optimizer, no Foundry, avalia o agente, gera configurações melhores e ranqueia. Você aprova antes de publicar.
+
+O ponto de atenção: se um plugin carrega uma fonte errada ou com permissão demais, todos os agentes herdam o erro. Governança vira prioridade.
+
+Minha dica prática: pare de colocar o conhecimento da empresa dentro das instruções do agente. Coloque num lugar reutilizável.
+
+Qual IQ você acha que seus agentes vão usar mais?
+
+Link com a minha análise completa na bio.
