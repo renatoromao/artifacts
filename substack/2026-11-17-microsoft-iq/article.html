@@ -1,0 +1,42 @@
+<p>Every organization now has access to the same frontier models, and those models get better every few weeks. So what actually makes one company's agents better than another's? At Microsoft Ignite 2026, Microsoft gave its answer: <strong>Microsoft IQ</strong>, which it calls "the enterprise context management platform that helps organizations create their own IQ."</p>
+<p>I build Copilot Studio and Microsoft Foundry agents for customers every week, and my thesis is simple: this is the most important announcement of the week for anyone building agents, because it moves the center of gravity from the model to the context. The model is a commodity. Your IQ is not.</p><figure><img src="https://azure.microsoft.com/en-us/blog/wp-content/uploads/2026/11/Microsoft-IQ-social-thumbnail-with-title-1920x1080-icon-no-ribbon.webp"></figure><p><em>Microsoft IQ was introduced at Microsoft Ignite 2026 (image: Microsoft)</em></p>
+<h2>1. What really changes: one layer between Copilot and Agent 365</h2>
+<p>The keynote slide says it all. On the left there's Copilot, on the right Agent 365, and between them sits a single layer called IQ. At the top of that layer is <strong>Your IQ</strong>, your organization's own intelligence. In the middle are the <strong>Business plugins</strong> and five sources of context, each covering one kind of knowledge:</p>
+<ul>
+<li><strong>Work IQ</strong>: productivity workflows (how people work: documents, conversations, collaboration and past decisions)</li>
+<li><strong>Fabric IQ</strong>: operational data (the state of the business through governed data, entities, relationships and rules)</li>
+<li><strong>Foundry IQ</strong>: unstructured data (curated institutional knowledge, such as policies and authoritative documents)</li>
+<li><strong>Web IQ</strong>: real-world info (timely web context, including news, images, videos and more)</li>
+<li><strong>Third-party IQ</strong>: third-party systems, through more than 350 third-party connectors</li>
+</ul><figure><img src="https://raw.githubusercontent.com/renatoromao/artifacts/main/substack/2026-11-17-microsoft-iq/iq-diagram.jpg"></figure><p><em>Your IQ, business plugins, five IQs and a multi-model system, between Copilot and Agent 365 (image: Microsoft)</em></p>
+<p>At the bottom there's a <strong>multi-model system</strong>, and the whole thing is wrapped in a <strong>continuous improvement</strong> loop. Microsoft describes the platform as open and model-diverse by design.</p>
+<p>Until now, Work IQ, Fabric IQ and Foundry IQ felt like three separate products with three separate stories. Microsoft IQ is the first time I see them presented as one platform with one job: building and compounding the context your agents run on.</p>
+<h2>2. The underrated detail: business plugins</h2>
+<p>Most of the coverage will focus on the IQ names. The piece I'd pay attention to is <strong>business plugins</strong>. Microsoft defines them as reusable, governed bundles of context, skills and authoritative sources that agents inherit. One plugin can be reused across agents, teams and platforms. You can build them in Microsoft Copilot, GitHub Copilot and Microsoft Foundry (via MCP), and they can connect to third-party assistants, including the ChatGPT and Claude marketplaces.</p>
+<p>Why does this matter so much? Because today, in almost every project I deliver, the same knowledge gets rebuilt agent by agent: the same instructions, the same SharePoint sources, the same "how we do things here" prompt, copied into the HR agent, the IT agent and the sales agent. Business plugins turn that know-how into an asset you curate once and reuse everywhere. That's the "compounding" Microsoft keeps talking about.</p>
+<h2>3. Risk and governance: context is now your attack surface</h2>
+<p>If context is the advantage, context is also the risk. A business plugin that hundreds of agents inherit is a single point of truth, and a single point of failure. If it carries a wrong policy or an over-permissioned source, every agent inherits the mistake.</p>
+<p>The good news is that the announcement leans on governance. In Work IQ, granular MCP policies are now generally available, and agent policy governance with human approval is in preview. In Foundry IQ, the SharePoint (indexed) knowledge source with permissions support is now GA, which means agents answer with what the user is allowed to see. These are exactly the details I check first in every customer review.</p>
+<h2>4. What admins should do now</h2>
+<ul>
+<li>Map which of your agents already use Work IQ, Fabric IQ or Foundry IQ, and who owns each knowledge source.</li>
+<li>Review MCP access with the new granular MCP policies in Work IQ before plugins start spreading.</li>
+<li>Decide who is allowed to publish business plugins, and treat them like code: owners, reviews and versioning.</li>
+<li>Check SharePoint permissions before indexing anything as a Foundry IQ knowledge source.</li>
+<li>Track cost: Web IQ starts at $1 per 1,000 calls, and Foundry IQ Serverless (GA in December 2026) brings usage-based pricing with no capacity to provision.</li>
+</ul>
+<h2>5. What makers and developers should do</h2>
+<p>Stop putting company knowledge inside agent instructions. Move it into a place that can be reused: a Foundry IQ knowledge base, a Fabric IQ ontology, a business plugin. Then use the continuous improvement loop in Microsoft Foundry: define success criteria, compare quality, latency and cost per successful outcome, and let <strong>Agent Optimizer</strong> evaluate your agent, generate improved configurations and rank them. When configuration changes stop producing gains, you can move to post-training with <strong>Managed Training</strong> or <strong>Programmed Training</strong> (public preview).</p><figure><img src="https://azure.microsoft.com/en-us/blog/wp-content/uploads/2026/11/Continuous-improvement-social-thumbnail-with-title-1920x1080-3.webp"></figure><p><em>Continuously improve your agents with Microsoft Foundry (image: Microsoft)</em></p>
+<p>A few other items worth testing now: Business Applications in Work IQ (CRM and ERP records) and real-time meeting context are GA; Memory and Word, Excel and PowerPoint creation and editing in Work IQ are in preview; Power BI semantic models in Microsoft Copilot are GA, and Fabric data agents in Microsoft Copilot are coming soon. On the Foundry IQ side, knowledge graphs and Microsoft Retriever 1, a new retrieval model, are in preview.</p>
+<h2>What I'm watching</h2>
+<ul>
+<li><strong>BRK293</strong>: Build your IQ using your unique enterprise context with Microsoft IQ (Tue, Nov 17)</li>
+<li><strong>INV641</strong>: Harnessing your IQ with a continuously improving agent platform (Wed, Nov 18)</li>
+</ul>
+<p>My question for you: which IQ do you think your agents will rely on the most? For most of my customers, I bet it starts with Work IQ and Foundry IQ, and the real value shows up the day they connect Fabric IQ.</p>
+<p>If you want more hands-on takes on Copilot Studio, Microsoft Foundry and agents, subscribe. I write from the field, not from the slides.</p>
+<h2>Links</h2>
+<ul>
+<li><a href="https://azure.microsoft.com/en-us/blog/introducing-the-new-microsoft-iq-putting-your-organizations-intelligence-to-work-in-every-agent/">Introducing the new Microsoft IQ (Microsoft Azure Blog)</a></li>
+<li><a href="https://news.microsoft.com/events/ignite/2026/live-news/">Microsoft Ignite 2026 live news</a></li>
+</ul>
