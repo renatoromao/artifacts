@@ -1,6 +1,6 @@
 <p>For two years, every serious agent project I delivered had the same hidden cost: orchestration. Which model handles research? Which one summarizes? How do you run the slow parts in parallel and merge the results without losing the thread? At Microsoft Ignite 2026, Microsoft moved that problem into the product. <strong>Auto in Copilot Cowork now uses subagents</strong>: for complex tasks, it splits the work across several models that run side by side, each one using the model best suited to its part, and then brings everything back together into one finished result.</p>
 <p>My take: this is a bigger deal than the model announcements that came with it. New models arrive every few weeks. A built-in way to divide, parallelize and recombine work is what turns a chat assistant into something you can delegate real work to.</p>
-<figure><img src="https://raw.githubusercontent.com/renatoromao/artifacts/main/substack/2026-11-18-cowork-subagents/hero.jpg"></figure>
+<figure><img src="https://raw.githubusercontent.com/renatoromao/artifacts/3475f531ca1368573b2ab08d18bc68089d6373ba/substack/2026-11-18-cowork-subagents/hero.jpg"></figure>
 <p><em>What's new in Copilot Cowork at Ignite 2026 (image: Microsoft)</em></p>
 <h2>1. What really changes: one task, many models, one result</h2>
 <p>Until now, when you asked Cowork for something complex, you got one agent working through the steps. With Auto and subagents, Cowork breaks the task into parts and runs them in parallel. Microsoft's own example is a competitive analysis that can research every competitor in parallel and come back as a single brief.</p>
@@ -12,12 +12,12 @@
 <li>Look up Q2 channel budget, on <strong>Claude Sonnet 5.5</strong> (22s)</li>
 </ul>
 <p>Four subagents, three models, one workbook. The total time equals the longest branch, not the sum of all of them.</p>
-<figure><img src="https://raw.githubusercontent.com/renatoromao/artifacts/main/substack/2026-11-18-cowork-subagents/subagents.jpg"></figure>
+<figure><img src="https://raw.githubusercontent.com/renatoromao/artifacts/3475f531ca1368573b2ab08d18bc68089d6373ba/substack/2026-11-18-cowork-subagents/subagents.jpg"></figure>
 <p><em>Cowork with Auto turned on, running subagents side by side on a task (image: Microsoft)</em></p>
 <h2>2. The underrated detail: the right model for each part</h2>
 <p>Look at the model badges again. The heavy research went to Claude Opus 5.5. The quick budget lookup went to Claude Sonnet 5.5. The Microsoft 365 work (Outlook, Teams, SharePoint) went to GPT-6.1 Sol. That's the routing decision I usually make by hand when I design multi-agent solutions in Microsoft Foundry or Copilot Studio, and here Auto makes it per subagent.</p>
 <p>It also connects to the other Auto enhancement announced at Ignite: Auto can now auto-adjust reasoning effort for each task, using Microsoft's latest decision model, <strong>Microsoft-Decision-1.1</strong>, on every step. Quick lookups stay fast and complex work gets deeper reasoning. Put the two together and you get a system that decides both <em>which</em> model works on each part and <em>how hard</em> it thinks.</p>
-<figure><img src="https://raw.githubusercontent.com/renatoromao/artifacts/main/substack/2026-11-18-cowork-subagents/auto.jpg"></figure>
+<figure><img src="https://raw.githubusercontent.com/renatoromao/artifacts/3475f531ca1368573b2ab08d18bc68089d6373ba/substack/2026-11-18-cowork-subagents/auto.jpg"></figure>
 <p><em>Cowork composer with Auto adjust effort on (image: Microsoft)</em></p>
 <h2>3. Risk and governance: more agents, same permissions</h2>
 <p>More moving parts means more questions from security teams. The good news is that the boundary doesn't move: Microsoft states that Cowork runs inside the Microsoft 365 security, compliance and governance organizations already use, and works within each user's existing permissions. In the example, the subagent that searches SharePoint only sees what the user can see.</p>
