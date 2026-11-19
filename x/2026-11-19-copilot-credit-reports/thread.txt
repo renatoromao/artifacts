@@ -4,4 +4,4 @@
 4/ The tutorial builds a weekly workflow: every Monday, last 14 days, an email with the rows above 1,000 credits. Agent FinOps in Copilot Studio itself. #MSIgnite  [slide4]
 5/ Heads-up: public preview, delegated user auth only, admin role required, no sovereign clouds. Coming December 2026: one connector action that submits, polls and downloads. Follow me for more Copilot and AI agent tips. #MSIgnite  [slide5]
 6/ 🔗 https://learn.microsoft.com/en-us/power-platform/admin/programmability-tutorial-download-copilot-credit-usage-reports
-📝 My take: <Substack URL> #MSIgnite
+📝 My take: https://renatoromao.substack.com/p/copilot-credit-usage-reports-api #MSIgnite
