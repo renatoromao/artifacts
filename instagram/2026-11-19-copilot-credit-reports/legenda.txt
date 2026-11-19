@@ -1,0 +1,13 @@
+O admin center do Power Platform guarda só 30 dias de consumo de Copilot Credits. Agora dá para guardar quanto tempo você quiser.
+
+A Microsoft publicou um tutorial novo no Learn para a Copilot Credit usage reports API, em public preview. Ela baixa os mesmos dados de entitlement e consumo que você vê no admin center.
+
+São dois relatórios. O FeatureDetailsPerResource mostra créditos por agente, ambiente, produto e feature. O BillingDetailsPerEnvironment mostra entitlement e consumo por ambiente e billing policy, separando pré-pago de pay-as-you-go.
+
+O detalhe que eu mais gostei: dá para rodar tudo num workflow do próprio Copilot Studio, com o conector Power Platform for Admins V2. O tutorial monta um fluxo semanal que manda um e-mail com as linhas acima de 1.000 créditos. Também funciona pelo Power Platform CLI ou pela API REST.
+
+O porém: é public preview, só aceita autenticação delegada (sem service principal), exige role de admin e ainda não funciona em sovereign clouds.
+
+Minha dica: comece a guardar os arquivos diários agora. O histórico começa a contar a partir de hoje.
+
+Link com a minha análise completa na bio.

@@ -1,0 +1,46 @@
+<p>Every time I sit down with a customer to review their Copilot Studio rollout, the same question shows up around minute ten: "Which agent is burning our Copilot Credits?" The Power Platform admin center answers that question, but only for the last 30 days, and only on screen. The moment someone asks for a quarter-over-quarter view, or an alert when an agent goes off the rails, we end up exporting, pasting and hoping nobody forgets to do it next month.</p>
+<p>Microsoft just published a new tutorial on Microsoft Learn: <strong>Download Copilot Credit usage reports programmatically (preview)</strong>. It shows how to use the <strong>Copilot Credit usage reports API</strong>, now in <strong>public preview</strong>, to submit, poll and download the same Copilot Credit entitlement and consumption data you see in the Power Platform admin center, and then act on the report rows. My take: this is the missing piece for agent FinOps, and the most interesting part is that you can run it from a workflow in Copilot Studio itself.</p>
+<h2>1. What really changes: the 30-day window stops being your history</h2>
+<p>The admin center reporting window is 30 days. The tutorial is explicit about the use cases: automate decisions, combine the data with other data sources, or maintain a long-term history beyond the 30-day reporting window. That last one is the big deal for me. Credit consumption is a trend question. You only see that an agent doubled its usage after a new knowledge source was added if you have the months before it.</p>
+<p>With the API, you schedule a report, land the file wherever your organization keeps its data, and the history is yours. One detail to keep in mind from the docs: dates in the most recent 30 days can still change because of late data and corrections, so treat recent rows as provisional and refresh them.</p>
+<h2>2. The underrated detail: two reports, two different questions</h2>
+<p>There are two report types, and picking the right one matters more than it looks:</p>
+<ul>
+<li><strong>FeatureDetailsPerResource</strong>: consumption by agent (resource), environment, product and feature. Columns include <code>ResourceName</code>, <code>EnvironmentName</code>, <code>Product</code>, <code>Feature</code>, <code>Channel</code>, <code>KnowledgeSources</code>, <code>ToolUsed</code>, <code>LLMModel</code>, plus <code>BilledCredits</code> and <code>NonBilledCredits</code>.</li>
+<li><strong>BillingDetailsPerEnvironment</strong>: entitlement and consumption by environment, entitlement and billing policy, including prepaid and pay-as-you-go. Credit columns are <code>CapacityPackCreditsConsumed</code> and <code>PayGoConsumedQuantity</code>.</li>
+</ul>
+<p>Both support <strong>Daily</strong> granularity (one row per day per dimension combination) or <strong>Summary</strong> (summed across the date range, no date column). The first report is what a maker or a CoE lead wants: which agent, which feature, which model. The second is what finance wants: how much of the capacity pack went where, and how much spilled into pay-as-you-go. Microsoft also notes that the two reports classify credits differently and may not reconcile, so don't build a dashboard that expects them to match to the last credit.</p>
+<h2>3. Three ways to get the data</h2>
+<p>The tutorial covers three clients, and I like that it doesn't force one:</p>
+<ul>
+<li><strong>Power Platform for Admins V2</strong> connector, in Power Automate or in Copilot Studio workflows, with three actions: <strong>Generate Licensing Report</strong>, <strong>Get Licensing Report Operation Status</strong> and <strong>Download Licensing Report File</strong>.</li>
+<li><strong>Power Platform CLI</strong>: <code>pac copilot-studio generate-licensing-report</code>, <code>pac copilot-studio get-licensing-report-operation</code> and <code>pac copilot-studio download-licensing-report-file</code>.</li>
+<li><strong>PowerShell (REST)</strong>, calling the Power Platform API directly.</li>
+</ul>
+<p>The generation is asynchronous: submit, poll, then download. Generate returns <code>202 Accepted</code> with <code>Location</code> and <code>Retry-After</code> headers, and the status call returns HTTP 200 even while the status is <code>Running</code>. If you have built long-running operations in Power Automate before, this pattern will feel familiar. If you haven't, the tutorial walks through the Do until loop step by step.</p>
+<h2>4. Risk and governance: read the preview fine print</h2>
+<p>This is where I slow customers down. According to the docs:</p>
+<ul>
+<li>It is in <strong>public preview</strong>, not meant for production use, and sovereign clouds aren't currently supported.</li>
+<li><strong>Delegated (user) authentication only</strong>. Application-only (service principal) tokens aren't supported.</li>
+<li>The user needs one of these roles: <strong>Global Administrator</strong>, <strong>Power Platform Administrator</strong> or <strong>Dynamics 365 Administrator</strong>.</li>
+<li>Submissions can return <code>429 Too Many Requests</code>. Honor <code>Retry-After</code>, schedule reports instead of looping, and reuse downloaded files.</li>
+</ul>
+<p>Delegated auth with an admin role means the flow runs under a highly privileged identity. Own that connection deliberately: a named admin account, a dedicated environment for the flow, and a clear owner. Don't let it live in someone's personal default environment.</p>
+<h2>5. What admins and makers should do now</h2>
+<p>The tutorial includes a complete weekly flow, and it is a great starting point. Every Monday it reports on the previous 14 complete UTC days with <strong>FeatureDetailsPerResource</strong> and <strong>Summary</strong>, adds <code>BilledCredits</code> and <code>NonBilledCredits</code>, and sends an email (Office 365 Outlook) with an HTML table of the rows above a <code>CreditThreshold</code> of 1,000.</p>
+<p>One subtlety worth knowing before you show this to your CFO: the threshold logic is per row, not per agent. Two rows of 600 credits for the same agent aren't selected by a 1,000 threshold. If you want a per-agent alert, group by <code>ResourceID</code> first.</p>
+<p>My checklist for this week:</p>
+<ul>
+<li>Pick the identity and environment that will own the Power Platform for Admins V2 connection.</li>
+<li>Build the weekly flow from the tutorial, test the true branch with <code>CreditThreshold</code> set to 0, then restore it.</li>
+<li>Start landing daily files in storage now, so your history starts growing today.</li>
+<li>Agree with finance which report feeds which dashboard.</li>
+</ul>
+<h2>What I'm watching</h2>
+<p>The docs list two things coming in <strong>December 2026</strong>: a new connector action that combines submission, polling and download in one step for Power Automate and Copilot Studio, and JSON report format support through the connector (it currently defaults to CSV). That single action will remove most of the plumbing from the flow, and I expect it to make this pattern standard in every CoE starter setup.</p>
+<p>If you implement Copilot Studio for customers or run a CoE, subscribe. I write about what I see in real projects with Copilot Studio, Microsoft Foundry and agents every week.</p>
+<h2>Links</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/power-platform/admin/programmability-tutorial-download-copilot-credit-usage-reports">Tutorial: Download Copilot Credit usage reports programmatically (preview), Microsoft Learn</a></li>
+</ul>

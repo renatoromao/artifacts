@@ -1,0 +1,17 @@
+📊 Copilot Credit history beyond 30 days is here.
+
+The Power Platform admin center keeps 30 days of Copilot Credit consumption. The new Copilot Credit usage reports API (public preview) lets you keep it as long as you want.
+
+What caught my attention:
+🔹 FeatureDetailsPerResource: credits by agent, environment, product and feature
+🔹 BillingDetailsPerEnvironment: prepaid vs. pay-as-you-go per billing policy
+🔹 3 ways in: Power Platform for Admins V2 connector, pac copilot-studio, or REST
+🔹 The tutorial builds a weekly workflow that emails the rows above 1,000 credits
+
+Agent FinOps, running in Copilot Studio itself.
+
+⚠️ Public preview: delegated user auth only (no service principal), admin role required, no sovereign clouds.
+
+Links in the comments 👇
+
+#CopilotStudio #PowerPlatform #FinOps #MVPBuzz
