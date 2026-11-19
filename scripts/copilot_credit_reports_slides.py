@@ -92,31 +92,45 @@ def reports_card(w):
     d.text((40, y - 10), "granularity: Daily | Summary", font=mono(26), fill=(110, 120, 140))
     return im.crop((0, 0, w, y + 40))
 
-# ---------- LinkedIn image (light identity, dark terminal, blue) ----------
-def linkedin(path):
-    W, H, M = 1200, 1000, 76
-    im = Image.new("RGB", (W, H), "white")
+# ---------- LinkedIn image / Instagram slide 1 (light identity, dark terminal, blue) ----------
+def rich(d, x, y, text, f, lh, maxw):
+    toks = []
+    for part in re.split(r"(\*[^*]+\*)", text):
+        for w in part.strip("*").split(): toks.append((w, part.startswith("*")))
+    lines, cur, sp = [], [], d.textlength(" ", font=f)
+    for w, a in toks:
+        if cur and sum(d.textlength(t, font=f) + sp for t, _ in cur) + d.textlength(w, font=f) > maxw:
+            lines.append(cur); cur = []
+        cur.append((w, a))
+    lines.append(cur)
+    for ln in lines:
+        cx = x
+        for w, a in ln: d.text((cx, y), w, font=f, fill=BLUE if a else INK); cx += d.textlength(w, font=f) + sp
+        y += lh
+    return y
+
+TERM_LINES = ["# Copilot Credit usage reports API (preview)",
+              "pac auth create --name LicensingReports",
+              "pac copilot-studio generate-licensing-report",
+              "  --report-name FeatureDetailsPerResource",
+              "pac copilot-studio get-licensing-report-operation",
+              "pac copilot-studio download-licensing-report-file"]
+
+def hero(path, W, H, title, fs=84, tfs=29, M=76, top=96, handle=None):
     glow = Image.new("RGB", (W, H), "white"); g = ImageDraw.Draw(glow)
     g.ellipse((W - 520, -420, W + 380, 380), fill=(214, 230, 255))
     g.ellipse((-460, H - 300, 360, H + 380), fill=(232, 240, 255))
-    im = glow.filter(ImageFilter.GaussianBlur(150))
-    d = ImageDraw.Draw(im)
-    f = font("ExtraBold", 84); y = 96
-    for line in [[("Keep your Copilot Credit", INK)], [("history ", INK), ("as long as", BLUE)], [("you want.", BLUE)]]:
-        x = M
-        for t, c in line: d.text((x, y), t, font=f, fill=c); x += d.textlength(t, font=f)
-        y += 96
-    y += 44
-    T = terminal(["# Copilot Credit usage reports API (preview)",
-                  "pac auth create --name LicensingReports",
-                  "pac copilot-studio generate-licensing-report",
-                  "  --report-name FeatureDetailsPerResource",
-                  "pac copilot-studio get-licensing-report-operation",
-                  "pac copilot-studio download-licensing-report-file"], W - 2 * M, fs=29)
+    im = glow.filter(ImageFilter.GaussianBlur(150)); d = ImageDraw.Draw(im)
+    y = rich(d, M, top, title, font("ExtraBold", fs), int(fs * 1.14), W - 2 * M) + 44
+    T = terminal(TERM_LINES, W - 2 * M, fs=tfs)
+    if handle: y += 30
     sh = Image.new("RGBA", (T.width + 120, T.height + 120), (0, 0, 0, 0))
     ImageDraw.Draw(sh).rounded_rectangle((60, 76, T.width + 60, T.height + 70), 26, fill=(0, 60, 160, 70))
     sh = sh.filter(ImageFilter.GaussianBlur(26)); im.paste(sh, (M - 60, y - 60), sh)
     t = rounded(T, border=(51, 65, 85)); im.paste(t, (M, y), t)
+    if handle:
+        d = ImageDraw.Draw(im); d.text((M, H - 80), handle, font=font("SemiBold", 32), fill=GRAY)
+        d.text((W - M, H - 80), "Copilot Studio · public preview", font=font("Medium", 28), fill=GRAY, anchor="ra")
     im.save(path, quality=94)
 
 # ---------- tweet-card carousel ----------
@@ -204,9 +218,12 @@ SLUG = "2026-11-19-copilot-credit-reports"
 HDR = {"pt": Image.open(f"{ROOT}/instagram/2026-11-18-cowork-subagents/slide1.jpg").crop((0, 0, 1080, 205)),
        "en": Image.open(f"{ROOT}/x/2026-11-18-cowork-subagents/slide1.jpg").crop((0, 0, 1080, 205))}
 os.makedirs(f"{ROOT}/linkedin/{SLUG}", exist_ok=True)
-linkedin(f"{ROOT}/linkedin/{SLUG}/image.jpg")
+hero(f"{ROOT}/linkedin/{SLUG}/image.jpg", 1200, 1000, "Keep your Copilot Credit history *as long as you want, via CLI.*")
 for lang, folder in (("pt", "instagram"), ("en", "x")):
     out = f"{ROOT}/{folder}/{SLUG}"; os.makedirs(out, exist_ok=True)
     for i, (paras, img, src) in enumerate(TXT[lang], 1):
         tweet_slide(HDR[lang], paras, img, f"{out}/slide{i}.jpg", src)
+hero(f"{ROOT}/instagram/{SLUG}/slide1.jpg", 1080, 1350,
+     "Guarde o histórico de Copilot Credits *pelo tempo que quiser, via CLI.*",
+     fs=106, tfs=25, M=64, top=170, handle="@renatoromaos")
 print("ok")
