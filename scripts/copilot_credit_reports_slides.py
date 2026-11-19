@@ -223,7 +223,18 @@ for lang, folder in (("pt", "instagram"), ("en", "x")):
     out = f"{ROOT}/{folder}/{SLUG}"; os.makedirs(out, exist_ok=True)
     for i, (paras, img, src) in enumerate(TXT[lang], 1):
         tweet_slide(HDR[lang], paras, img, f"{out}/slide{i}.jpg", src)
-hero(f"{ROOT}/instagram/{SLUG}/slide1.jpg", 1080, 1350,
-     "Guarde o histórico de Copilot Credits *pelo tempo que quiser, via CLI.*",
-     fs=106, tfs=25, M=64, top=170, handle="@renatoromaos")
-print("ok")
+def term_scene(W, H, M=50, tfs=23):
+    glow = Image.new("RGB", (W, H), "white"); g = ImageDraw.Draw(glow)
+    g.ellipse((W - 520, -420, W + 380, 380), fill=(214, 230, 255))
+    g.ellipse((-460, H - 300, 360, H + 380), fill=(232, 240, 255))
+    im = glow.filter(ImageFilter.GaussianBlur(150))
+    T = terminal(TERM_LINES, W - 2 * M, fs=tfs); y = (H - T.height) // 2
+    sh = Image.new("RGBA", (T.width + 120, T.height + 120), (0, 0, 0, 0))
+    ImageDraw.Draw(sh).rounded_rectangle((60, 76, T.width + 60, T.height + 70), 26, fill=(0, 60, 160, 70))
+    sh = sh.filter(ImageFilter.GaussianBlur(26)); im.paste(sh, (M - 60, y - 60), sh)
+    t = rounded(T, border=(51, 65, 85)); im.paste(t, (M, y), t)
+    return im
+
+tweet_slide(HDR["pt"], ["**Guarde o histórico de Copilot Credits pelo tempo que quiser, via CLI.**",
+                        "Novo no Learn: Copilot Credit usage reports API (public preview). Os mesmos dados do admin center, sem o limite de 30 dias."],
+            term_scene(948, 640), f"{ROOT}/instagram/{SLUG}/slide1.jpg")
