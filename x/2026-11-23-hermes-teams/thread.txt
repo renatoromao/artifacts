@@ -1,0 +1,6 @@
+1/ 🤝 Hermes now works in Microsoft Teams. Nous Research brought Hermes Enterprise to Microsoft Foundry: an AI coworker with its own Microsoft 365 account. #MSIgnite #MicrosoftIgnite
+2/ It doesn't borrow your identity. Each Hermes agent gets its own Microsoft Entra agent identity, email, calendar, OneDrive, a manager in the org chart and an audit trail. #MSIgnite
+3/ You don't build the agent, you build the blueprint. An admin approves it, then each employee hires their own instance with unique identity and access. #MSIgnite
+4/ Nous owns the agent: runtime, skills and memory. Foundry runs it: hosting, identity, enterprise controls and distribution to Teams. Hermes turns every correction into a skill. #MSIgnite
+5/ Hermes Enterprise is coming soon. Today: an open-source cookbook (POC) + Agent 365 Frontier. Would you hire an AI agent? Follow me for more Copilot and AI agent tips. #MSIgnite
+6/ (reply) 🔗 Official post: https://devblogs.microsoft.com/foundry/build-trusted-autonomous-agents-for-your-team-with-microsoft-foundry/  📝 My take: <Substack URL> #MSIgnite

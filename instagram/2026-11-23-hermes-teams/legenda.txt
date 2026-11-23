@@ -1,0 +1,15 @@
+O Hermes agora trabalha no Microsoft Teams. E não como um bot qualquer.
+
+No Ignite, a Nous Research trouxe o Hermes Enterprise para o Microsoft Foundry. O Hermes é o agente open source mais usado no OpenRouter, e agora pode virar um colega de IA com conta própria no Microsoft 365.
+
+O que mais me chamou atenção foi a identidade. Cada Hermes tem a sua própria identidade no Microsoft Entra, e-mail, agenda, OneDrive, um gestor no organograma e trilha de auditoria. Ele age como ele mesmo, sem pegar emprestada a permissão de ninguém.
+
+O detalhe que muita gente vai deixar passar é o blueprint. Você não cria o agente, cria o modelo. O admin aprova e cada pessoa contrata a sua instância, com acesso próprio.
+
+E tem a parte do aprendiz: o Hermes aprende como o gestor trabalha e transforma cada correção em uma skill.
+
+O porém: o Hermes Enterprise ainda está "em breve". Hoje dá para testar com o cookbook open source, que é uma prova de conceito e exige o programa Frontier do Agent 365.
+
+Minha dica: comece com um piloto pequeno num tenant de desenvolvimento e teste o kill switch antes de qualquer coisa.
+
+Siga o @renatoromaos para mais conteúdos
