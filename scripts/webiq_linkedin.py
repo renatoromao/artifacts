@@ -76,7 +76,7 @@ W, H, M = 1200, 1500, 70
 g = Image.new("RGB", (W, H), "white"); gd = ImageDraw.Draw(g)
 gd.ellipse((W-520, -420, W+380, 380), fill=(214,230,255)); gd.ellipse((-460, H-300, 360, H+380), fill=(232,240,255))
 im = g.filter(ImageFilter.GaussianBlur(150)); d = ImageDraw.Draw(im)
-y = rich(d, M, 80, "Every Microsoft Web IQ call your agents can make, *via REST or MCP.*", font("ExtraBold", 74), 86, W-2*M) + 40
+y = rich(d, M, 80, "Web IQ commands *for agents.*", font("ExtraBold", 74), 86, W-2*M) + 40
 T = terminal(W - 2*M)
 sh = Image.new("RGBA", (T.width+120, T.height+120), (0,0,0,0))
 ImageDraw.Draw(sh).rounded_rectangle((60,76,T.width+60,T.height+70), 26, fill=(0,60,160,70))
