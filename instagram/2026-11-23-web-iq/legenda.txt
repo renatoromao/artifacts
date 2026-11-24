@@ -1,0 +1,13 @@
+Seus agentes de IA não precisam só de "busca na web". Precisam de evidência com citação, que dê para governar.
+
+A Microsoft liberou o Web IQ para todos os clientes Azure, sem waitlist. Ele é a camada de web do Microsoft IQ, junto com Work IQ, Fabric IQ e Foundry IQ. A ideia é simples: o Web IQ busca a evidência na web e o seu modelo escreve a resposta.
+
+O que mudou para quem constrói agentes é que não existe mais uma chamada genérica. Tem o Auto, que escolhe as fontes numa chamada só (e o Auto Advanced, que faz recuperação iterativa para perguntas difíceis), e tem chamadas dedicadas: /web, /news, /images, /video e /browse, que extrai o conteúdo de uma URL. Além de dados estruturados de Places, Weather e Commerce (este ainda em private preview).
+
+O detalhe que eu mais gostei foi o Scopes: listas de sites permitidos e bloqueados direto na camada de busca. Com failOnMissingScope, o agente falha fechado em vez de cair na web aberta. É isso que eu mostraria para um time de risco.
+
+O ponto de atenção: precisa de assinatura Azure paga (créditos do Azure não funcionam), e Scopes no Auto ainda está em preview.
+
+Minha dica prática: comece pelo Auto, use /browse quando o agente já tem a URL (é a chamada mais barata, US$ 1 por mil) e deixe o Auto Advanced para as perguntas em que uma segunda rodada de busca vale o custo.
+
+Siga o @renatoromaos para mais conteúdos
