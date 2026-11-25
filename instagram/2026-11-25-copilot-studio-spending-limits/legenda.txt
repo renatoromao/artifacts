@@ -1,0 +1,15 @@
+Seu agente mais popular pode queimar o crédito do ambiente inteiro. Agora dá para colocar limite por agente direto no admin do Microsoft 365.
+
+A Microsoft lançou as spending policies do Copilot Studio no Microsoft 365 admin center, em Copilot > Cost management. Limite por agente e por ambiente está em public preview. Limite por pessoa ou grupo vem em breve.
+
+Testei no meu tenant: criei uma política para um ambiente com 400 dólares por mês e um limite de 50 dólares por agente. Quando um agente bate o limite, ele para de rodar até os créditos resetarem no dia 1º do mês seguinte, e os outros agentes do ambiente continuam funcionando.
+
+O detalhe que eu mais gostei: os alertas diários por e-mail têm um campo separado para o gasto de cada agente. E dá para escolher pré-pago ou pay-as-you-go numa assinatura Azure, com chargeback por área.
+
+O cuidado: em Resource collection o padrão vem marcado como All environments. Isso move todos os ambientes do tenant de uma vez. Comece por Specific environments.
+
+Antes de criar a primeira política, atribua os papéis novos: AI Administrator para quem gerencia e AI Reader para quem só acompanha o consumo.
+
+Comenta LIMITE que eu te mando o link no direct 👇
+
+Siga o @renatoromaos para mais conteúdos

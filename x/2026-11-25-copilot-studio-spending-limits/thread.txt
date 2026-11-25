@@ -1,0 +1,20 @@
+1/ 💸 Your most popular agent can burn the whole environment's credits.
+
+Copilot Studio now has spending policies in the Microsoft 365 admin center: Copilot > Cost management (public preview). #MSIgnite #CopilotStudio
+
+2/ Scope a policy to Resources: a specific agent, or a collection of environments.
+
+Then set a monthly limit for the policy AND "Limit monthly spending per agent", so one agent can't drain the rest.
+
+3/ Fund it with prepaid Capacity Packs or pay-as-you-go on a connected Azure subscription.
+
+Link an Azure subscription for chargeback, so each department owns its cost.
+
+4/ Per-agent and per-environment limits: public preview. Per user or group: coming soon.
+
+New roles: AI Administrator and AI Reader.
+
+Follow me for more Copilot and AI agent tips.
+
+5/ 🔗 Official post: https://techcommunity.microsoft.com/blog/copilot-studio-blog/how-to-manage-costs-for-copilot-studio-agents/4576413
+📝 My take: {SUBSTACK_URL}
