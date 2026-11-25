@@ -1,0 +1,64 @@
+<p>Here's a scenario I see with customers all the time. An environment gets a monthly pool of Copilot Credits. One agent goes viral internally, say an HR assistant that half the company starts using in the same week, and it quietly eats the credits that every other agent in that environment was counting on. Nobody notices until the other agents stop answering.</p>
+<p>Microsoft just shipped the control I've been asking for: <strong>spending policies for Copilot Studio in the Microsoft 365 admin center</strong>, with a monthly limit per environment <em>and</em> a limit per agent. Resource and environment spending policies are in <strong>public preview</strong>. Identity-scoped policies (per user or group) are marked <strong>coming soon</strong>.</p>
+<p>I went through the whole flow in my tenant. My take: the environment budget is the headline, but the <strong>per-agent limit</strong> is the setting that will actually save you from the 2 a.m. "why did everything stop" call.</p>
+<h2>1. What really changes: Copilot Studio cost management moves into the Microsoft 365 admin center</h2>
+<p>Until now, Copilot Studio capacity lived in the Power Platform admin center: environment credit allocation, agent credit limits, overage notifications. That doesn't disappear. What's new is that the Microsoft 365 admin center (MAC) now has <strong>Copilot &gt; Cost management</strong>, with three tabs: Overview, Configuration and Consumption.</p>
+<p>Under <strong>Configuration &gt; Add spending policy</strong> you pick a scope:</p>
+<ul>
+<li><strong>Identity</strong>: the people who sign in and use the agents.</li>
+<li><strong>Resources</strong>: specific resources, regardless of who runs them. Inside it, <strong>Specific resource</strong> (individual agents you pick by name) or <strong>Resource collection</strong> (all usage inside the environments you choose).</li>
+</ul>
+<figure><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00NTc2NDEzLVhORkN4Rw?image-dimensions=999x520&amp;revision=3"></figure><p><em>The new Cost management page in the Microsoft 365 admin center. (image: Microsoft)</em></p><p>Microsoft's own framing: makers and admins share the job.</p><figure><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00NTc2NDEzLUFwc3hqRw?image-dimensions=999x559&amp;revision=3"></figure><p><em>Makers and admins need to work together for cost management. (image: Microsoft)</em></p>
+<p>The opt-in is the policy itself. According to Microsoft Learn, there's no migration step: once a MAC resource-based policy is linked to an environment, it takes precedence for that scope, and Power Platform capacity allocations and linked billing plans no longer apply to that environment. Remove the environment (or delete the policy) and the Power Platform configuration resumes automatically.</p>
+<h2>2. The underrated detail: "Limit monthly spending per agent"</h2>
+<p>On the <strong>Limits and alerts</strong> step there are two separate blocks, and this is where it gets good:</p>
+<ul>
+<li><strong>Set the monthly spending limit for this policy</strong>: the cap for the whole policy. I set $400 (≈ 40,000 credits).</li>
+<li><strong>Select monthly budget limits for agents</strong> &gt; <strong>Limit monthly spending per agent</strong>: the UI describes it as preventing runaway usage by a single agent with a uniform limit across all agents in the policy. I set $50 (≈ 5,000 credits).</li>
+</ul>
+<p>That second number is the one that protects your other agents. With only an environment cap, the popular agent still drains the pool and everyone hits the wall together. With a per-agent cap, the popular agent stops at its own ceiling and the rest keep working.</p>
+<p>Things I only saw by clicking through:</p>
+<ul>
+<li>You type limits in <strong>USD</strong>, and the screen converts them to credits. The UI warns that limits are saved in credits, so their currency value can change with your pricing.</li>
+<li>The wizard enforces a <strong>minimum</strong> based on the number of resources in the policy. For my environment it asked for at least $310 (≈ 31,000 credits) at policy level and $20 (≈ 2,000 credits) per agent, and showed a "recommended" value based on industry usage trends.</li>
+<li>When the limit is reached, the screen says the resource (for example, an agent) <strong>can no longer run until credits reset on the 1st of next month</strong>. That's a hard stop, so size it with care.</li>
+<li><strong>Define alerts</strong> sends a daily email summary to users or mail-enabled security groups. You get a policy threshold (I used 80% of limit) and a separate <strong>Alert when an agent's monthly spending reaches</strong> field.</li>
+</ul>
+<figure><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00NTc2NDEzLTNuaEYwSA?image-dimensions=999x560&amp;revision=3"></figure><p><em>Scenario 1: fund a critical agent or its environment with a resource-scoped spending policy. (image: Microsoft)</em></p><h2>3. Funding: prepaid, pay-as-you-go and chargeback via Azure</h2>
+<p>The <strong>Billing method</strong> step uses the default subscription, and you can override it with <strong>Use Capacity packs</strong> (the prepaid Capacity Pack credit bundle) or <strong>Use Pay-as-you-go</strong>, which bills a connected Azure subscription. The screen states that prepaid credits are used first before switching to pay-as-you-go. Microsoft also notes that policy limits apply to both prepaid and PAYG usage.</p>
+<p>For me the business angle is <strong>chargeback</strong>: linking a policy to an Azure subscription so each department sees and owns its costs. That's the conversation every CFO wants to have about AI agents, and it's finally a setting instead of a spreadsheet.</p>
+<figure><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00NTc2NDEzLTcwUmhvSQ?image-dimensions=848x999&amp;revision=3"></figure><p><em>Billing method: prepaid Capacity Packs or pay-as-you-go on an Azure subscription. (image: Microsoft)</em></p><h2>4. Risk and governance: read the hierarchy before you click "All environments"</h2>
+<p>Two things will surprise admins.</p>
+<p><strong>First, the default.</strong> When I chose <strong>Resource collection</strong>, the wizard pre-selected <strong>All environments</strong>. Microsoft Learn is explicit: start with <strong>Specific environments</strong>, because All environments moves every environment in the tenant at once and removes their Power Platform capacity allocations and linked billing plans.</p>
+<p><strong>Second, the order of precedence</strong>, as documented on Learn:</p>
+<ol>
+<li>Microsoft 365 admin center policies come before Power Platform admin center controls for the usage they cover.</li>
+<li>Resource-based comes before identity-based. An HR agent's resource policy applies regardless of who runs it.</li>
+<li>Among policies of the same type, the <strong>highest</strong> applicable limit applies. Limits are not combined. The wizard repeats it: the most permissive policy is enforced.</li>
+<li>If an agent hits its agent-specific limit, usage doesn't fall back to the user's identity-based policy.</li>
+</ol>
+<p>Also note the scope gaps: resource-based policies don't cover <strong>AI Builder</strong> features or the credits they consume (including prompts used as tools, in topics or as agent flow nodes). And apps and workflows don't appear in the agent picker, so to cover them you create a policy for their environment.</p>
+<h2>5. What admins should do now</h2>
+<ul>
+<li>☑ Assign the new roles first. Power Platform or Dynamics 365 Administrators get <strong>AI Administrator</strong> to manage spending policies (it isn't granted automatically). Environment Administrators get <strong>AI Reader</strong> to view consumption. Global admins: no change. Makers: no new role.</li>
+<li>☑ Pilot with <strong>Specific environments</strong>, never All environments on day one.</li>
+<li>☑ Set a policy limit <em>and</em> a per-agent limit. Use the wizard's minimum and recommended values as a starting point.</li>
+<li>☑ Turn on alerts for a mail-enabled security group, not one person.</li>
+<li>☑ Decide prepaid vs PAYG per policy, and link an Azure subscription where you need chargeback.</li>
+<li>☑ Allow up to 12 minutes after linking an environment for the policy to apply.</li>
+</ul>
+<h2>6. What makers should do</h2>
+<p>Makers don't get a new role, but they get visibility. Microsoft describes consumption views across the build cycle in Copilot Studio: <strong>Preview</strong> (near-real-time estimates for design decisions), <strong>History</strong> (conversation-level estimates to find expensive or failed paths), <strong>Evaluate</strong> and <strong>Monitor</strong> (reconciliation against processed usage, with a reporting delay). Some of these views depend on rollout.</p>
+<p>My advice: before you ask your admin for a bigger cap, open History and find the expensive path. A per-agent limit turns "we'll optimize later" into a real deadline.</p>
+<h2>What I'm watching</h2>
+<ul>
+<li><strong>Identity-scoped spending policies</strong> (per user or security group), marked coming soon. This is how you'll fund makers to experiment without opening the whole tenant.</li>
+<li>Recommended limits, recommended roles and roles set up in code, which Microsoft lists as early 2027 (planned).</li>
+<li>Rollout: in the Tech Community comments, at least one admin reported Copilot Studio didn't yet appear when creating a spending policy. Check your tenant before you plan a change window.</li>
+</ul>
+<p>If you implement Copilot Studio for real customers, subscribe. I write about what I see in the admin centers and in projects every week.</p>
+<h2>Links</h2>
+<ul>
+<li><a href="https://techcommunity.microsoft.com/blog/copilot-studio-blog/how-to-manage-costs-for-copilot-studio-agents/4576413">How to manage costs for Copilot Studio agents (Copilot Studio Blog)</a></li>
+<li><a href="https://learn.microsoft.com/en-us/copilot/implement/usage-based-billing-manage-copilot-studio-costs">Manage Copilot Studio costs in the Microsoft 365 admin center (Microsoft Learn)</a></li>
+</ul>
